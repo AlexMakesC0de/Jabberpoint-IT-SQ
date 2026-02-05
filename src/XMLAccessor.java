@@ -44,6 +44,8 @@ public class XMLAccessor extends Accessor {
     protected static final String PCE = "Parser Configuration Exception";
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
+
+    protected final String DIRECTORY = "presentations";
     
     
     private String getTitle(Element element, String tagName) {
@@ -114,7 +116,14 @@ public class XMLAccessor extends Accessor {
 	}
 
 	public void saveFile(Presentation presentation, String filename) throws IOException {
-		PrintWriter out = new PrintWriter(new FileWriter(filename));
+
+        File dir = new File(DIRECTORY);
+
+        if(!dir.exists()) {
+            dir.mkdir();
+        }
+
+		PrintWriter out = new PrintWriter(new FileWriter(new File(DIRECTORY, filename)));
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<!DOCTYPE presentation SYSTEM \"jabberpoint.dtd\">");
 		out.println("<presentation>");
